@@ -60,7 +60,7 @@ pub fn execute_command(
 | `scripts` | Сохранённые скрипты |
 | `ai_providers` | Конфигурации AI провайдеров |
 | `ai_conversations` | История AI-диалогов |
-| `audit_log` | Локальный аудит действий |
+| `audit_log` | Аудит действий: id, server_id, server_name, action, command, result, success, timestamp |
 | `settings` | Настройки приложения |
 
 ### Безопасность хранения
@@ -70,7 +70,7 @@ pub fn execute_command(
 ```
 plaintext password
        ↓
-AES-256-GCM encrypt (key = PBKDF2(MachineGUID + AppID))
+AES-256-GCM encrypt (key = SHA-256(MachineGUID + "-" + AppID))
        ↓
 base64(nonce + ciphertext)
        ↓

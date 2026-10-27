@@ -85,7 +85,7 @@ Desktop notifications (Windows native) for: server offline, high CPU/RAM/disk, S
 
 ### AI Assistant (BYO API)
 
-Connects to any OpenAI-compatible API endpoint: OpenAI, Ollama, LM Studio, vLLM, or your own server. Step-by-step diagnostic mode — AI proposes one command at a time, you review the risk level and choose to execute or skip. Security: server data (metrics, logs, command output) is always injected as a separate user message marked `[SERVER DATA]`, never in the system prompt — this prevents prompt injection through log content. The API URL is validated (http/https only); API keys are kept in `sessionStorage` (planned: move to encrypted Tauri plugin-store).
+Connects to any OpenAI-compatible API endpoint: OpenAI, Ollama, LM Studio, vLLM, or your own server. Step-by-step diagnostic mode — AI proposes one command at a time, you review the risk level and choose to execute or skip. Security: server data (metrics, logs, command output) is always injected as a separate user message marked `[SERVER DATA]`, never in the system prompt — this prevents prompt injection through log content. The API URL is validated (http/https only); API keys are stored in `sessionStorage` (cleared on app close; old `localStorage` values are migrated automatically on first launch).
 
 ---
 

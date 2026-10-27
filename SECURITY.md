@@ -13,7 +13,7 @@
 ### Схема шифрования
 
 ```
-Master Key = SHA-256(Windows MachineGUID + "ru.serverpilot.app.v1")
+Master Key = SHA-256(MachineGUID + "-" + "ru.serverpilot.app.v1")
 Nonce = random 96-bit (каждый раз новый)
 Ciphertext = AES-256-GCM(Master Key, Nonce, plaintext)
 Stored = base64(Nonce || Ciphertext)
@@ -70,9 +70,8 @@ timestamp | server_id | action | command | success
 
 ## Безопасность SSH подключения
 
-- Host key fingerprint показывается при первом подключении
-- Проверка host key включена по умолчанию
-- Поддержка known_hosts
+- Fingerprint сервера вычисляется (SHA-256) при подключении — отображение в UI и pinning не реализованы (запланировано)
+- known_hosts не реализован (запланировано)
 - Keepalive для предотвращения разрыва
 - Timeout при подключении (30 секунд)
 - SSH private key остаётся на диске пользователя, не копируется в БД
