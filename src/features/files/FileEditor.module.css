@@ -1,0 +1,212 @@
+.editor {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height) - 40px);
+  background: #0d1117;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  animation: fadeIn 150ms ease;
+}
+
+/* ── Шапка ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+  min-height: 44px;
+}
+
+.backBtn {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary); cursor: pointer;
+  transition: all var(--transition-fast); flex-shrink: 0;
+}
+.backBtn:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+.fileInfo {
+  display: flex; align-items: center; gap: 6px;
+  flex-shrink: 0;
+}
+.fileIcon { color: var(--accent-blue); }
+.fileName {
+  font-size: 13px; font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.dirtyDot {
+  width: 7px; height: 7px;
+  background: var(--accent-yellow);
+  border-radius: 50%; flex-shrink: 0;
+}
+
+.filePath {
+  font-size: 11px; color: var(--text-muted);
+  font-family: var(--font-mono);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  min-width: 0; flex: 1;
+}
+
+.headerRight {
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0; margin-left: auto;
+}
+
+/* Размер шрифта */
+.fontSizeCtrl {
+  display: flex; align-items: center; gap: 4px;
+}
+.fontBtn {
+  width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-tertiary); border: 1px solid var(--border-color);
+  border-radius: 3px; color: var(--text-secondary);
+  font-size: 14px; cursor: pointer; line-height: 1;
+  transition: all var(--transition-fast);
+}
+.fontBtn:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.fontVal { font-size: 11px; color: var(--text-muted); min-width: 32px; text-align: center; }
+
+/* Word wrap */
+.wrapBtn {
+  padding: 3px 8px; font-size: 11px;
+  background: var(--bg-tertiary); border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm); color: var(--text-muted); cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.wrapBtn:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.wrapActive { background: rgba(79,142,247,0.1); border-color: var(--accent-blue); color: var(--accent-blue); }
+
+/* Язык */
+.langBadge {
+  padding: 3px 8px; font-size: 11px;
+  background: var(--bg-tertiary); border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm); color: var(--text-muted);
+}
+
+/* Кнопка сохранения */
+.saveBtn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 14px;
+  background: var(--bg-tertiary); border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm); color: var(--text-secondary);
+  font-size: 12px; font-weight: 500; cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.saveBtn:hover:not(:disabled) { border-color: var(--accent-blue); color: var(--text-primary); }
+.saveBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+.saveBtnDirty {
+  background: rgba(63,185,80,0.1); border-color: rgba(63,185,80,0.4);
+  color: var(--accent-green);
+}
+.saveBtnDirty:hover:not(:disabled) {
+  background: rgba(63,185,80,0.2); border-color: var(--accent-green); color: var(--accent-green);
+}
+
+/* ── Ошибка сохранения ── */
+.saveError {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 8px 14px; background: rgba(248,81,73,0.08);
+  border-bottom: 1px solid rgba(248,81,73,0.25);
+  color: var(--accent-red); font-size: 12px; flex-shrink: 0;
+}
+.saveError span { flex: 1; word-break: break-all; }
+.errClose { color: var(--accent-red); cursor: pointer; display: flex; padding: 2px; border-radius: 3px; }
+.errClose:hover { background: rgba(248,81,73,0.2); }
+
+/* ── Баннер изменений ── */
+.dirtyBanner {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 14px; background: rgba(210,153,34,0.08);
+  border-bottom: 1px solid rgba(210,153,34,0.2);
+  font-size: 12px; color: var(--accent-yellow); flex-shrink: 0;
+}
+.dirtyBtn {
+  display: flex; align-items: center; gap: 4px;
+  padding: 3px 10px;
+  background: rgba(210,153,34,0.12); border: 1px solid rgba(210,153,34,0.3);
+  border-radius: var(--radius-sm); color: var(--accent-yellow);
+  font-size: 11px; cursor: pointer; transition: all var(--transition-fast);
+}
+.dirtyBtn:hover { background: rgba(210,153,34,0.2); }
+.dirtyBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+.dirtySep { color: var(--text-muted); }
+.dirtyHint { font-size: 11px; color: var(--text-muted); }
+
+/* ── Monaco ── */
+.monacoWrap {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.monacoLoading {
+  display: flex; align-items: center; gap: 10px;
+  padding: 40px; color: var(--text-muted); font-size: 13px;
+}
+
+/* ── Строка состояния ── */
+.statusBar {
+  display: flex; align-items: center; gap: 16px;
+  padding: 4px 14px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  font-size: 11px; color: var(--text-muted);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+.statusBar span { white-space: nowrap; }
+
+/* ── Диалог закрытия ── */
+.confirmOverlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.65); backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+}
+.confirmDialog {
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl); padding: 24px;
+  width: 400px; display: flex; flex-direction: column; gap: 14px;
+  box-shadow: var(--shadow-lg);
+  animation: slidePalette 150ms ease;
+}
+.confirmTitle {
+  font-size: 15px; font-weight: 600; color: var(--text-primary);
+  display: flex; align-items: center; gap: 8px;
+}
+.confirmMsg {
+  font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+}
+.confirmActions {
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;
+}
+
+.btnSecondary {
+  padding: 7px 14px; background: var(--bg-tertiary);
+  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+  color: var(--text-secondary); font-size: 13px; cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.btnSecondary:hover { background: var(--bg-hover); }
+
+.btnSaveAndClose {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; background: var(--accent-green); color: var(--bg-primary);
+  border-radius: var(--radius-sm); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: opacity var(--transition-fast);
+}
+.btnSaveAndClose:hover { opacity: 0.85; }
+
+.btnCloseAnyway {
+  padding: 7px 14px; background: var(--bg-tertiary);
+  border: 1px solid rgba(248,81,73,0.3); border-radius: var(--radius-sm);
+  color: var(--accent-red); font-size: 13px; cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.btnCloseAnyway:hover { background: rgba(248,81,73,0.1); }

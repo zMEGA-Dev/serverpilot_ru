@@ -1,0 +1,82 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height) - 40px);
+  background: #0d1117;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  animation: fadeIn 200ms ease;
+}
+
+/* Пустые состояния */
+.empty {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 10px; height: 100%; text-align: center;
+}
+.emptyIcon { color: var(--text-muted); opacity: 0.4; }
+.empty h2 { color: var(--text-secondary); font-size: 16px; }
+.empty p { color: var(--text-muted); font-size: 13px; }
+
+/* Вкладки */
+.tabBar {
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+  min-height: 34px;
+  overflow-x: auto;
+  padding: 0 4px;
+  gap: 2px;
+}
+
+.tab {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  color: var(--text-muted); font-size: 12px;
+  cursor: pointer; transition: all var(--transition-fast);
+  border: 1px solid transparent; border-bottom: none;
+  margin-top: 3px; white-space: nowrap; flex-shrink: 0;
+}
+.tab:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
+.tabActive { background: #0d1117; color: var(--text-primary); border-color: var(--border-color); }
+
+.tabTitle { max-width: 130px; overflow: hidden; text-overflow: ellipsis; }
+
+.tabClose {
+  display: flex; align-items: center; padding: 2px; border-radius: 2px; opacity: 0.5;
+}
+.tabClose:hover { opacity: 1; background: rgba(248,81,73,0.2); color: var(--accent-red); }
+
+.addTabBtn {
+  padding: 4px 7px; color: var(--text-muted);
+  cursor: pointer; border-radius: 3px; flex-shrink: 0;
+  transition: color var(--transition-fast);
+}
+.addTabBtn:hover { color: var(--text-primary); }
+
+.hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 0 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+/* Область терминала */
+.termArea {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.termPane {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

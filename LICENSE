@@ -1,0 +1,25 @@
+ServerPilot RU — Proprietary License
+
+Copyright (c) 2024–2025 ServerPilot RU Project
+
+The compiled binary of ServerPilot RU ("the Software") is made available free
+of charge for personal use, testing, and evaluation during the Alpha period.
+
+The source code of the Software is proprietary and is NOT published in this
+repository. This repository contains only the compiled installer and related
+documentation.
+
+PERMITTED:
+- Download and run the Software for personal use
+- Report bugs and suggest features via GitHub Issues
+- Share links to this repository
+
+NOT PERMITTED:
+- Reverse engineering, decompiling, or disassembling the Software
+- Redistributing the Software without permission
+- Using the Software for commercial purposes without a license
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. THE AUTHORS
+ARE NOT LIABLE FOR ANY DAMAGES ARISING FROM THE USE OF THE SOFTWARE.
+
+For commercial licensing inquiries, contact the project via GitHub Issues.

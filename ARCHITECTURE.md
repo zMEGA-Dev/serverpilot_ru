@@ -2,245 +2,146 @@
 
 ## Обзор
 
-ServerPilot RU — Windows desktop-приложение на базе **Tauri 2**, Rust, React, TypeScript и WebView2.
+ServerPilot RU — нативное desktop-приложение на базе **Tauri 2** (Rust + WebView2).
 
-```text
-┌────────────────────────────────────────────────────────┐
-│                    Windows Desktop App                 │
-│                                                        │
-│  ┌──────────────────────┐   ┌────────────────────────┐ │
-│  │ React / TypeScript   │◄─►│ Rust / Tauri backend   │ │
-│  │ WebView2             │   │                        │ │
-│  │ i18n ru/en           │   │ SSH / SFTP / PTY       │ │
-│  │ UI + feature logic   │   │ SQLite / crypto        │ │
-│  │ Monaco Editor        │   │ Tauri IPC              │ │
-│  └──────────────────────┘   └─────────────┬──────────┘ │
-│                                           │            │
-└───────────────────────────────────────────┼────────────┘
-                                            │ SSH / SFTP
-                                            ▼
-                                   ┌──────────────────┐
-                                   │ Linux / VPS      │
-                                   └──────────────────┘
+```
+┌─────────────────────────────────────────────────────┐
+│                  Windows Desktop App                 │
+│                                                     │
+│  ┌────────────────────┐   ┌──────────────────────┐  │
+│  │   React Frontend   │   │    Rust Backend      │  │
+│  │   (WebView2)       │◄──►│    (Tauri)           │  │
+│  │                    │   │                      │  │
+│  │  React + TS        │   │  SSH (ssh2 crate)    │  │
+│  │  Zustand stores    │   │  SQLite (rusqlite)   │  │
+│  │  React Router      │   │  AES-256-GCM crypto  │  │
+│  │  Recharts          │   │  Tauri IPC commands  │  │
+│  │  i18next (ru/en)   │   │                      │  │
+│  └────────────────────┘   └──────────────────────┘  │
+│                                    │                 │
+│                           ┌────────▼───────┐        │
+│                           │ Linux/VPS      │        │
+│                           │ (SSH directly) │        │
+│                           └────────────────┘        │
+└─────────────────────────────────────────────────────┘
 ```
 
-Core server-management operations are performed from the user's Windows machine over SSH/SFTP. ServerPilot RU does not require a ServerPilot cloud backend for the Alpha release.
+## Взаимодействие Frontend ↔ Backend
 
----
+Все вызовы идут через **Tauri IPC** (`invoke()`):
 
-## Frontend ↔ Rust backend
-
-Frontend and native functionality communicate through Tauri IPC (`invoke()`).
-
-Typical flow:
-
-```text
-React / TypeScript
-        │
-        │ Tauri invoke()
-        ▼
-Rust command handler
-        │
-        ├── validation
-        ├── local state / SQLite
-        └── SSH / SFTP / PTY operation
-                 │
-                 ▼
-             Linux / VPS
+```typescript
+// Frontend (TypeScript)
+const result = await invoke<CommandResult>("execute_command", {
+  serverId: "abc-123",
+  command: "df -h"
+});
 ```
 
-Commands are validated on the Rust side for the operations where server paths, process identifiers, Docker identifiers, configuration content, or other sensitive parameters are involved.
-
----
-
-## Local data storage
-
-The application stores local state under:
-
-```text
-%LOCALAPPDATA%\ServerPilotRU\
+```rust
+// Backend (Rust)
+#[tauri::command]
+pub fn execute_command(
+    state: State<AppState>,
+    server_id: String,
+    command: String,
+) -> Result<CommandResult, String> { ... }
 ```
 
-The SQLite database contains application data such as:
+## Хранение данных
 
-| Area | Purpose |
+### SQLite (local, `%LOCALAPPDATA%/ServerPilotRU/data.db`)
+
+| Таблица | Содержимое |
 |---|---|
-| `servers` | Server metadata |
-| `server_credentials` | Encrypted SSH passwords and key passphrases |
-| `command_history` | Local command history |
-| `scripts` | Saved scripts |
-| `ai_providers` | AI provider configuration |
-| `ai_conversations` | Local AI conversation history |
-| `audit_log` | Local action history |
-| `settings` | Application settings |
+| `servers` | Метаданные серверов (без паролей) |
+| `server_credentials` | AES-256-GCM зашифрованные credentials |
+| `command_history` | История выполненных команд |
+| `scripts` | Сохранённые скрипты |
+| `ai_providers` | Конфигурации AI провайдеров |
+| `ai_conversations` | История AI-диалогов |
+| `audit_log` | Локальный аудит действий |
+| `settings` | Настройки приложения |
 
-The exact schema may change during Alpha development.
+### Безопасность хранения
 
----
+Пароли и ключевые фразы **никогда** не хранятся в plain text:
 
-## Credential protection
-
-SSH passwords and SSH key passphrases stored by the application are encrypted locally using AES-256-GCM with a machine-specific key derivation scheme.
-
-The current implementation is tied to the local Windows installation/machine identity. The private SSH key itself is not copied into the application's database; the application stores the path to the user's key file.
-
-AI credentials are kept separately from the encrypted SSH credential store and should be treated as sensitive local configuration.
-
----
-
-## SSH sessions
-
-SSH connections are managed through the Rust backend.
-
-The application maintains connection state for normal SSH/SFTP operations and uses separate PTY sessions for interactive terminal tabs.
-
-Typical lifecycle:
-
-```text
-connect
-  ↓
-authenticate
-  ↓
-validate host key / fingerprint
-  ↓
-use SSH / SFTP operations
-  ↓
-keepalive / reconnect when supported
-  ↓
-disconnect
+```
+plaintext password
+       ↓
+AES-256-GCM encrypt (key = PBKDF2(MachineGUID + AppID))
+       ↓
+base64(nonce + ciphertext)
+       ↓
+server_credentials table
 ```
 
-Multiple PTY tabs use separate SSH sessions.
+## SSH Connection Pool
 
----
+```
+AppState {
+    db: Mutex<Database>,
+}
 
-## SSH operation serialization
-
-Regular SSH operations use the application's SSH queue/session management to avoid unsafe concurrent access to shared session state.
-
-SFTP obtains an SFTP session through the Rust backend and does not intentionally hold the shared lock for the entire file transfer.
-
-Long-running SSH operations may still require runtime timeout/cancellation improvements in future releases.
-
----
-
-## AI integration
-
-AI is optional and is configured by the user.
-
-The Alpha supports OpenAI-compatible endpoints such as:
-
-- OpenAI
-- Ollama
-- LM Studio
-- vLLM
-- user-owned compatible servers
-
-The high-level flow is:
-
-```text
-User
- ↓
-AI mode
- ↓
-Collect selected server context through Tauri IPC
- ↓
-POST to user-configured AI endpoint
- ↓
-AI response
- ↓
-Risk classification
- ↓
-Show proposed command
- ↓
-User explicitly approves or skips
- ↓
-Rust executes the approved command over SSH
+SSH_POOL: Lazy<Mutex<HashMap<server_id, ManagedSession>>>
 ```
 
-Server data is treated as untrusted input and is kept separate from the AI system prompt to reduce prompt-injection risk.
+- Соединения хранятся в глобальном пуле по `server_id`
+- Переподключение при разрыве
+- При удалении сервера — автоматическое отключение
 
-SSH passwords, private keys, and key passphrases are not intentionally included in AI context.
+## AI Integration
 
----
+AI работает через **OpenAI-compatible REST API** — только с frontend-а:
 
-## Security boundaries
-
-```text
-Windows client
-   │
-   ├── Local encrypted credentials
-   ├── Local SQLite
-   ├── Local application logs
-   │
-   ├── SSH / SFTP ───────────────► User-selected Linux/VPS
-   │
-   └── Optional AI API ──────────► User-selected AI endpoint
+```
+User prompt
+    ↓
+Collect server context (CPU, RAM, OS, recent logs) via Tauri IPC
+    ↓
+POST /v1/chat/completions → AI provider (configurable endpoint)
+    ↓
+Parse response → extract КОМАНДА: + ОБЪЯСНЕНИЕ:
+    ↓
+Classify risk (read_only / low / medium / high / critical)
+    ↓
+Show to user with risk warning
+    ↓
+User clicks "Выполнить"
+    ↓
+invoke("execute_command") → SSH → result → display
 ```
 
-There is no mandatory ServerPilot cloud service in the Alpha architecture.
+**Важно:** приватные ключи и пароли **никогда** не передаются в AI API.
 
----
+## Frontend State Management
 
-## Frontend state
+```
+serversStore (Zustand)
+├── servers[]
+├── selectedServerId
+├── connectionStatus{}
+└── loadServers / addServer / deleteServer / ...
 
-Application state is split into feature-specific stores and local component state as needed.
-
-Typical areas include:
-
-- server list and selected server;
-- connection status;
-- terminal sessions;
-- UI state and command palette;
-- monitoring history;
-- settings and notification preferences.
-
-The exact internal state structure may evolve during Alpha.
-
----
-
-## Major modules
-
-```text
-src/
-├── pages/
-│   ├── servers/
-│   ├── terminal/
-│   ├── files/
-│   ├── monitoring/
-│   ├── logs/
-│   ├── processes/
-│   ├── pm2/
-│   ├── docker/
-│   ├── deployment/
-│   ├── nginx/
-│   ├── ssl/
-│   ├── security/
-│   ├── scripts/
-│   ├── backups/
-│   ├── settings/
-│   └── about/
-└── ...
+uiStore (Zustand)
+├── sidebarCollapsed
+├── notifications[]
+└── commandPaletteOpen
 ```
 
-The project is feature-oriented, but file layout may change during active development.
+## Модули (Feature-based structure)
 
----
-
-## Future commercial architecture
-
-The Alpha release does **not** require a license server or paid subscription.
-
-For a future commercial release, licensing should be implemented as a separate server-side system. The client should contain only a public verification key, while private signing keys and subscription/payment secrets remain on the server.
-
-```text
-ServerPilot Client
-        │
-        ├── signed license/update data
-        ▼
-License / Update API
-        │
-        └── server-side private keys
 ```
-
-The private signing key must never be embedded in the client application or public repository.
+src/features/
+├── servers/      # CRUD серверов, форма добавления
+├── terminal/     # SSH терминал, вкладки, history
+├── files/        # SFTP файловый менеджер (Этап 4)
+├── monitoring/   # CPU/RAM/Disk графики (Этап 5)
+├── logs/         # Просмотр логов, live tail (Этап 6)
+├── ai/           # AI провайдеры, команды, approval
+├── security/     # Audit проверки (Этап 9)
+├── scripts/      # Сохранённые скрипты (Этап 9)
+├── deployment/   # Git деплой (Этап 8)
+└── settings/     # Настройки приложения
+```

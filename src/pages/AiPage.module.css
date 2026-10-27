@@ -1,0 +1,100 @@
+.page { display: flex; flex-direction: column; gap: 10px; height: calc(100vh - var(--header-height) - 40px); animation: fadeIn 200ms ease; }
+
+/* Шапка */
+.header { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.header h1 { font-size: 18px; font-weight: 700; }
+.headerRight { display: flex; align-items: center; gap: 8px; }
+
+.ctxBtn { display: flex; align-items: center; gap: 5px; padding: 5px 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: all var(--transition-fast); }
+.ctxBtn:hover { border-color: var(--accent-green); color: var(--accent-green); }
+.ctxBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.configBtn { display: flex; align-items: center; gap: 5px; padding: 5px 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: all var(--transition-fast); }
+.configBtn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+
+.resetBtn { display: flex; align-items: center; gap: 5px; padding: 5px 10px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-muted); font-size: 12px; cursor: pointer; transition: all var(--transition-fast); }
+.resetBtn:hover { border-color: rgba(248,81,73,0.4); color: var(--accent-red); }
+
+/* Нет провайдера */
+.noProvider { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 40px; text-align: center; color: var(--text-muted); }
+.noProvider p { font-size: 15px; color: var(--text-secondary); }
+.providerHint { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+/* Настройки */
+.configPanel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px; flex-shrink: 0; display: flex; flex-direction: column; gap: 12px; }
+.configTitle { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.configFields { display: flex; flex-direction: column; gap: 10px; }
+.configField { display: flex; flex-direction: column; gap: 4px; }
+.configField label { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+.configInput { padding: 7px 10px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 13px; }
+.configInput:focus { border-color: var(--border-focus); outline: none; }
+.configHint { font-size: 11px; color: var(--text-muted); }
+.configActions { display: flex; gap: 8px; }
+.configSave { padding: 7px 16px; background: var(--accent-blue); color: white; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; transition: background var(--transition-fast); }
+.configSave:hover { background: var(--accent-blue-hover); }
+.configCancel { padding: 7px 14px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-secondary); font-size: 13px; cursor: pointer; }
+
+/* Режимы */
+.modes { display: flex; flex-wrap: wrap; gap: 6px; flex-shrink: 0; }
+.modeBtn { padding: 5px 14px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: all var(--transition-fast); }
+.modeBtn:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.modeBtnActive { background: rgba(79,142,247,0.12); border-color: var(--accent-blue); color: var(--accent-blue); }
+
+/* Чат */
+.chatArea { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
+
+.welcome { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 40px 20px; color: var(--text-muted); text-align: center; }
+.welcome p { font-size: 14px; color: var(--text-secondary); }
+.suggestions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.suggestion { padding: 6px 14px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: all var(--transition-fast); }
+.suggestion:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+
+/* Сообщения */
+.msg { display: flex; gap: 8px; }
+.msgUser { flex-direction: row-reverse; }
+.msgAi {}
+.msgIcon { color: var(--accent-blue); flex-shrink: 0; margin-top: 3px; }
+.msgBody { max-width: 85%; display: flex; flex-direction: column; }
+.msgUser .msgBody { align-items: flex-end; }
+.msgText { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 10px 14px; font-size: 13px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; font-family: var(--font-sans); margin: 0; }
+.msgUser .msgText { background: rgba(79,142,247,0.1); border-color: rgba(79,142,247,0.25); }
+
+/* Шаги диагностики */
+.stepCard { border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.step_pending { background: var(--bg-card); opacity: 0.6; }
+.step_waiting { background: var(--bg-card); border-color: rgba(79,142,247,0.4); }
+.step_running { background: var(--bg-card); border-color: rgba(79,142,247,0.6); }
+.step_done   { background: rgba(63,185,80,0.04); border-color: rgba(63,185,80,0.25); }
+.step_error  { background: rgba(248,81,73,0.04); border-color: rgba(248,81,73,0.25); }
+
+.stepHeader { display: flex; align-items: center; gap: 8px; }
+.stepNum { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0; }
+.stepDesc { font-size: 13px; font-weight: 600; color: var(--text-primary); flex: 1; }
+.stepDuration { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); }
+
+.stepCmd { display: block; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 8px 12px; font-family: var(--font-mono); font-size: 13px; color: var(--accent-cyan); user-select: text; }
+.stepExpl { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin: 0; }
+.stepRisk { font-size: 11px; font-weight: 600; }
+
+.stepActions { display: flex; gap: 8px; }
+.executeBtn { display: flex; align-items: center; gap: 5px; padding: 6px 16px; background: var(--accent-green); color: var(--bg-primary); border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; transition: opacity var(--transition-fast); }
+.executeBtn:hover { opacity: 0.85; }
+.cancelBtn { display: flex; align-items: center; gap: 5px; padding: 6px 12px; background: var(--bg-hover); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-muted); font-size: 12px; cursor: pointer; }
+.cancelBtn:hover { color: var(--text-primary); }
+
+.stepResult { background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 8px 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); white-space: pre-wrap; word-break: break-word; max-height: 200px; overflow-y: auto; margin: 0; user-select: text; }
+.stepResultErr { color: var(--accent-red); border-color: rgba(248,81,73,0.25); }
+
+/* Typing indicator */
+.thinking { display: flex; gap: 4px; padding: 10px 14px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); width: fit-content; }
+.dot { width: 6px; height: 6px; background: var(--text-muted); border-radius: 50%; animation: pulse 1.2s infinite; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Ввод */
+.inputArea { display: flex; gap: 8px; align-items: center; flex-shrink: 0; padding: 4px 0; }
+.msgInput { flex: 1; padding: 10px 14px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); color: var(--text-primary); font-size: 13px; transition: border-color var(--transition-fast); }
+.msgInput:focus { border-color: var(--border-focus); outline: none; }
+.sendBtn { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: var(--accent-blue); color: white; border-radius: var(--radius-lg); cursor: pointer; transition: background var(--transition-fast); flex-shrink: 0; }
+.sendBtn:hover { background: var(--accent-blue-hover); }
+.sendBtn:disabled { opacity: 0.4; cursor: not-allowed; }

@@ -1,0 +1,13 @@
+{
+  "identifier": "default",
+  "description": "Default capabilities for ServerPilot RU",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "dialog:default",
+    "fs:default",
+    "notification:default",
+    "shell:default",
+    "store:default"
+  ]
+}

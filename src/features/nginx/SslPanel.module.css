@@ -1,0 +1,98 @@
+.panel {
+  width: 300px; min-width: 300px;
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg); display: flex; flex-direction: column;
+  overflow: hidden; flex-shrink: 0;
+}
+.panelHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+}
+.panelTitle { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.closeBtn { color: var(--text-muted); cursor: pointer; display: flex; padding: 2px; border-radius: 3px; }
+.closeBtn:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+/* Статус */
+.statusBlock { padding: 12px 14px; border-bottom: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px; }
+.statusRow { display: flex; align-items: center; gap: 8px; }
+.statusText { flex: 1; font-size: 13px; font-weight: 600; }
+.statusOk { color: var(--accent-green); }
+.statusWarning { color: var(--accent-yellow); }
+.statusExpired { color: var(--accent-red); }
+.statusNone { color: var(--text-muted); }
+.refreshBtn { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 3px; color: var(--text-muted); cursor: pointer; }
+.refreshBtn:hover { background: var(--bg-hover); color: var(--text-primary); }
+.refreshBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.certDetails { display: flex; flex-direction: column; gap: 4px; }
+.certRow { display: flex; gap: 8px; align-items: baseline; }
+.certKey { font-size: 11px; color: var(--text-muted); min-width: 56px; flex-shrink: 0; }
+.certVal { font-size: 12px; color: var(--text-secondary); word-break: break-all; }
+.warnText { color: var(--accent-yellow); font-weight: 500; }
+
+/* Секции */
+.section { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; flex-direction: column; gap: 8px; }
+.sectionTitle { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.certbotRow { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+.renewalRow { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+.muted { font-size: 12px; color: var(--text-muted); }
+
+/* Dry run */
+.dryRunRow { }
+.btnDryRun { display: flex; align-items: center; gap: 5px; padding: 5px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: all var(--transition-fast); }
+.btnDryRun:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.btnDryRun:disabled { opacity: 0.4; cursor: not-allowed; }
+.dryRunResult { display: flex; align-items: flex-start; gap: 6px; padding: 6px 8px; border-radius: var(--radius-sm); font-size: 12px; }
+.resultOk { background: rgba(63,185,80,0.08); border: 1px solid rgba(63,185,80,0.2); color: var(--accent-green); }
+.resultErr { background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.2); color: var(--accent-red); }
+
+/* Кнопка получения */
+.btnGetSsl {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px; background: rgba(79,142,247,0.1);
+  border: 1px solid rgba(79,142,247,0.35); border-radius: var(--radius-md);
+  color: var(--accent-blue); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all var(--transition-fast); width: 100%;
+}
+.btnGetSsl:hover { background: rgba(79,142,247,0.2); }
+.btnGetSsl:disabled { opacity: 0.4; cursor: not-allowed; }
+.btnRenewSsl { background: rgba(63,185,80,0.1); border-color: rgba(63,185,80,0.35); color: var(--accent-green); }
+.btnRenewSsl:hover { background: rgba(63,185,80,0.2); }
+.noCertbotHint { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+.noCertbotHint code { background: var(--bg-hover); padding: 1px 5px; border-radius: 3px; font-family: var(--font-mono); }
+
+/* Форма получения */
+.obtainForm { display: flex; flex-direction: column; gap: 12px; }
+.obtainTitle { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.fields { display: flex; flex-direction: column; gap: 8px; }
+.field { display: flex; flex-direction: column; gap: 3px; }
+.field label { font-size: 11px; color: var(--text-muted); }
+.inp { padding: 7px 10px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 12px; }
+.inp:focus { border-color: var(--border-focus); outline: none; }
+
+.notice {
+  display: flex; gap: 8px;
+  padding: 8px 10px; background: rgba(79,142,247,0.06);
+  border: 1px solid rgba(79,142,247,0.2); border-radius: var(--radius-sm);
+  font-size: 11px; color: var(--text-secondary); line-height: 1.5;
+}
+.noticeList { margin: 4px 0 0 16px; padding: 0; }
+.noticeList li { margin-bottom: 2px; }
+
+.confirmBlock {
+  display: flex; gap: 10px; padding: 10px;
+  background: rgba(210,153,34,0.06); border: 1px solid rgba(210,153,34,0.2);
+  border-radius: var(--radius-sm); font-size: 12px; color: var(--text-secondary);
+}
+.confirmBlock p { margin: 2px 0; }
+
+.resultBanner { display: flex; gap: 8px; padding: 8px 10px; border-radius: var(--radius-sm); font-size: 12px; }
+.resultOutput { font-family: var(--font-mono); font-size: 10px; white-space: pre-wrap; max-height: 120px; overflow-y: auto; margin: 4px 0 0; opacity: 0.8; }
+
+.obtainActions { display: flex; gap: 6px; justify-content: flex-end; }
+.btnCancel { padding: 6px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-secondary); font-size: 12px; cursor: pointer; }
+.btnCancel:hover { background: var(--bg-hover); }
+.btnObtain { display: flex; align-items: center; gap: 5px; padding: 6px 14px; background: var(--accent-blue); color: white; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; cursor: pointer; transition: background var(--transition-fast); }
+.btnObtain:hover { background: var(--accent-blue-hover); }
+.btnObtain:disabled { opacity: 0.5; cursor: not-allowed; }

@@ -1,0 +1,53 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #0d1117;
+  overflow: hidden;
+}
+
+.terminal {
+  flex: 1;
+  overflow: hidden;
+  /* Небольшой паддинг чтобы курсор не упирался в край */
+  padding: 4px 6px 4px 4px;
+}
+
+/* xterm.js стили */
+.terminal :global(.xterm) { height: 100%; }
+.terminal :global(.xterm-viewport)::-webkit-scrollbar { width: 6px; }
+.terminal :global(.xterm-viewport)::-webkit-scrollbar-track { background: transparent; }
+.terminal :global(.xterm-viewport)::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+.terminal :global(.xterm-viewport)::-webkit-scrollbar-thumb:hover { background: #8b949e; }
+
+/* Статус-бары */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+.barInfo {
+  background: rgba(88,166,255,0.08);
+  border-bottom: 1px solid rgba(88,166,255,0.2);
+  color: #58a6ff;
+}
+.barError {
+  background: rgba(248,81,73,0.08);
+  border-bottom: 1px solid rgba(248,81,73,0.2);
+  color: #f85149;
+}
+.reconnBtn {
+  background: none;
+  border: none;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0;
+}
+.reconnBtn:hover { opacity: 0.75; }

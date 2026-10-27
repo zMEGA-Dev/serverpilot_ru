@@ -1,0 +1,90 @@
+.page { display: flex; flex-direction: column; gap: 14px; animation: fadeIn 200ms ease; }
+.empty { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 80px; color: var(--text-muted); text-align: center; }
+
+/* Шапка */
+.header { display: flex; align-items: center; justify-content: space-between; }
+.header h1 { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; }
+.scanBtn { display: flex; align-items: center; gap: 6px; padding: 8px 18px; background: var(--accent-blue); color: white; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; transition: background var(--transition-fast); }
+.scanBtn:hover { background: var(--accent-blue-hover); }
+.scanBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Ошибка */
+.errorBanner { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.25); border-radius: var(--radius-md); color: var(--accent-red); font-size: 13px; }
+
+/* Прогресс */
+.scanProgress { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 18px; }
+.scanProgressTitle { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px; }
+.scanSteps { display: flex; flex-direction: column; gap: 8px; }
+.scanStep { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-muted); }
+.scanStepDone { color: var(--accent-green); }
+.scanStepActive { color: var(--text-primary); }
+.scanStepPending { opacity: 0.5; }
+.scanStepCat { margin-left: auto; font-size: 11px; color: var(--text-muted); }
+.stepCircle { width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--border-color); flex-shrink: 0; }
+
+/* Score + сводка */
+.summary { display: flex; align-items: center; gap: 24px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px; flex-wrap: wrap; }
+.scoreGauge { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; }
+.scoreLabel { font-size: 12px; font-weight: 600; }
+.summaryStats { display: flex; gap: 24px; flex-wrap: wrap; }
+.statItem { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.statNum { font-size: 28px; font-weight: 700; color: var(--text-primary); line-height: 1; }
+.statLabel { font-size: 11px; color: var(--text-muted); }
+.summaryMeta { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; font-size: 12px; color: var(--text-muted); }
+.rescanBtn { display: flex; align-items: center; gap: 5px; padding: 5px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: all var(--transition-fast); }
+.rescanBtn:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+
+/* Фильтры */
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filterBtn { padding: 5px 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: all var(--transition-fast); }
+.filterBtn:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.filterBtnActive { background: rgba(79,142,247,0.12); border-color: var(--accent-blue); color: var(--accent-blue); }
+
+/* Категории и чеки */
+.checks { display: flex; flex-direction: column; gap: 16px; }
+.category { display: flex; flex-direction: column; gap: 6px; }
+.categoryTitle { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; padding: 0 2px; }
+.checksList { display: flex; flex-direction: column; gap: 4px; }
+.noChecks { padding: 20px; text-align: center; color: var(--text-muted); }
+
+/* Карточка проверки */
+.checkCard { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; transition: border-color var(--transition-fast); }
+.checkCard:hover { border-color: rgba(79,142,247,0.3); }
+
+/* Статус-окраска карточки */
+.statusPass  { border-left: 3px solid var(--accent-green); }
+.statusWarn  { border-left: 3px solid var(--accent-yellow); }
+.statusCrit  { border-left: 3px solid var(--accent-red); }
+.statusInfo  { border-left: 3px solid var(--accent-blue); }
+.statusUnk   { border-left: 3px solid var(--text-muted); }
+.checkPending { opacity: 0.4; }
+.checkRunning { border-left: 3px solid var(--accent-blue); }
+
+.checkHeader { display: flex; align-items: center; gap: 10px; width: 100%; padding: 11px 14px; text-align: left; cursor: pointer; transition: background var(--transition-fast); }
+.checkHeader:hover { background: var(--bg-hover); }
+.checkTitle { flex: 1; font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.checkCat { font-size: 11px; color: var(--text-muted); flex-shrink: 0; }
+.chevron { color: var(--text-muted); flex-shrink: 0; }
+
+.statusBadge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 8px; flex-shrink: 0; letter-spacing: 0.3px; }
+.statusPass .statusBadge, .statusPass_badge  { background: rgba(63,185,80,0.1); color: var(--accent-green); }
+.statusWarn .statusBadge, .statusWarn_badge  { background: rgba(210,153,34,0.1); color: var(--accent-yellow); }
+.statusCrit .statusBadge, .statusCrit_badge  { background: rgba(248,81,73,0.1); color: var(--accent-red); }
+.statusInfo .statusBadge, .statusInfo_badge  { background: rgba(79,142,247,0.1); color: var(--accent-blue); }
+.statusUnk  .statusBadge, .statusUnk_badge   { background: var(--bg-hover); color: var(--text-muted); }
+
+.checkBody { padding: 10px 14px 14px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; }
+.currentVal { display: flex; flex-direction: column; gap: 3px; }
+.fieldLabel { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+.fieldVal { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); background: var(--bg-secondary); padding: 4px 8px; border-radius: 4px; display: block; }
+.checkDesc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+.recommendation { display: flex; flex-direction: column; gap: 4px; }
+.recLabel { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px; }
+.recVal { font-family: var(--font-mono); font-size: 12px; color: var(--accent-blue); background: rgba(79,142,247,0.06); border: 1px solid rgba(79,142,247,0.15); border-radius: 4px; padding: 8px 10px; white-space: pre-wrap; margin: 0; }
+
+/* Пустой экран */
+.emptyState { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 60px 20px; text-align: center; }
+.emptyState h2 { font-size: 18px; color: var(--text-secondary); }
+.emptyState p { font-size: 13px; color: var(--text-muted); max-width: 400px; }
+.checksList_preview { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 8px; }
+.previewItem { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-muted); background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 4px 10px; }

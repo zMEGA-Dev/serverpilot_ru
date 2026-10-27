@@ -1,0 +1,92 @@
+.page { display: flex; flex-direction: column; gap: 14px; animation: fadeIn 200ms ease; }
+.empty { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 80px; color: var(--text-muted); text-align: center; }
+
+/* ── Не установлен ── */
+.notInstalled { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 60px 20px; text-align: center; }
+.notInstalled h2 { font-size: 18px; color: var(--text-secondary); }
+.notInstalled p { font-size: 13px; color: var(--text-muted); max-width: 400px; }
+.installCode { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 8px 16px; font-family: var(--font-mono); font-size: 13px; color: var(--accent-cyan); }
+
+/* ── Шапка ── */
+.header { display: flex; align-items: center; gap: 10px; }
+.header h1 { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; }
+.gitVersion { font-size: 11px; color: var(--text-muted); background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 2px 8px; }
+
+/* ── Main area ── */
+.mainArea { display: flex; flex-direction: column; gap: 12px; }
+
+/* ── Form card ── */
+.formCard { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.formTitle { font-size: 14px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.4px; font-size: 11px; }
+.fields { display: flex; flex-direction: column; gap: 10px; }
+.fieldRow { display: flex; gap: 10px; }
+.field { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.field label { font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+.inp { padding: 8px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 13px; }
+.inp:focus { border-color: var(--border-focus); outline: none; }
+.formError { display: flex; align-items: center; gap: 6px; padding: 8px 10px; background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.25); border-radius: var(--radius-sm); color: var(--accent-red); font-size: 12px; }
+
+/* ── Repo status ── */
+.repoStatus { padding: 10px 12px; border-radius: var(--radius-md); font-size: 12px; display: flex; flex-direction: column; gap: 4px; }
+.repoStatusOk { background: rgba(63,185,80,0.06); border: 1px solid rgba(63,185,80,0.2); color: var(--text-secondary); }
+.repoStatusNew { background: rgba(79,142,247,0.06); border: 1px solid rgba(79,142,247,0.2); color: var(--text-muted); }
+.repoStatusRow { display: flex; align-items: center; gap: 8px; }
+.commitHash { font-family: var(--font-mono); font-size: 11px; background: var(--bg-hover); padding: 1px 6px; border-radius: 4px; color: var(--accent-blue); }
+.commitMsg { font-size: 12px; color: var(--text-muted); padding-left: 21px; }
+.changesWarn { display: flex; align-items: center; gap: 6px; color: var(--accent-yellow); font-size: 11px; padding-left: 1px; }
+
+/* ── Кнопки ── */
+.actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btnClone { display: flex; align-items: center; gap: 6px; padding: 8px 18px; background: var(--accent-blue); color: white; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; transition: background var(--transition-fast); }
+.btnClone:hover { background: var(--accent-blue-hover); }
+.btnClone:disabled { opacity: 0.5; cursor: not-allowed; }
+.btnPull { display: flex; align-items: center; gap: 6px; padding: 8px 18px; background: rgba(63,185,80,0.1); border: 1px solid rgba(63,185,80,0.3); color: var(--accent-green); border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; transition: all var(--transition-fast); }
+.btnPull:hover { background: rgba(63,185,80,0.2); }
+.btnPull:disabled { opacity: 0.4; cursor: not-allowed; }
+.btnRefresh { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-secondary); cursor: pointer; transition: all var(--transition-fast); }
+.btnRefresh:hover { background: var(--bg-hover); color: var(--text-primary); }
+.btnFiles { display: flex; align-items: center; gap: 6px; padding: 8px 14px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: all var(--transition-fast); }
+.btnFiles:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+
+/* ── Result card ── */
+.resultCard { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; }
+.resultBanner { display: flex; align-items: center; gap: 8px; padding: 10px 14px; font-size: 13px; font-weight: 500; }
+.resultOk { background: rgba(63,185,80,0.08); border-bottom: 1px solid rgba(63,185,80,0.2); color: var(--accent-green); }
+.resultErr { background: rgba(248,81,73,0.08); border-bottom: 1px solid rgba(248,81,73,0.2); color: var(--accent-red); }
+.exitCode { margin-left: auto; font-family: var(--font-mono); font-size: 11px; opacity: 0.7; }
+
+/* ── Output ── */
+.outputWrap { display: flex; flex-direction: column; }
+.outputHeader { display: flex; align-items: center; gap: 6px; padding: 8px 14px; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; background: var(--bg-tertiary); border-bottom: 1px solid var(--border-color); }
+.output { margin: 0; padding: 12px 14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); white-space: pre-wrap; word-break: break-word; max-height: 320px; overflow-y: auto; background: var(--bg-secondary); user-select: text; line-height: 1.6; }
+
+/* ── История ── */
+.historySection { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; }
+.historyHeader { display: flex; align-items: center; gap: 8px; width: 100%; padding: 12px 16px; background: var(--bg-tertiary); border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-size: 13px; font-weight: 600; cursor: pointer; transition: background var(--transition-fast); }
+.historyHeader:hover { background: var(--bg-hover); }
+.historyCount { background: var(--bg-hover); border: 1px solid var(--border-color); border-radius: 8px; padding: 1px 7px; font-size: 11px; color: var(--text-muted); }
+.historyList { display: flex; flex-direction: column; }
+.historyItem { padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.historyItem:last-of-type { border-bottom: none; }
+.histSuccess { border-left: 2px solid var(--accent-green); }
+.histError { border-left: 2px solid var(--accent-red); }
+.histTop { display: flex; align-items: center; gap: 8px; }
+.histRepo { font-weight: 600; font-size: 13px; color: var(--text-primary); }
+.histBranch { font-size: 12px; color: var(--text-muted); }
+.histCommit { font-family: var(--font-mono); font-size: 11px; background: var(--bg-hover); padding: 1px 5px; border-radius: 3px; color: var(--accent-blue); }
+.histTime { margin-left: auto; font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+.histMeta { display: flex; gap: 10px; font-size: 11px; color: var(--text-muted); margin-top: 3px; padding-left: 21px; }
+.historyClear { padding: 8px 16px; font-size: 12px; color: var(--text-muted); cursor: pointer; transition: color var(--transition-fast); text-align: left; width: 100%; }
+.historyClear:hover { color: var(--accent-red); }
+
+/* ── Диалог ── */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; z-index: 300; }
+.dialog { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-xl); padding: 24px; width: 460px; display: flex; flex-direction: column; gap: 14px; box-shadow: var(--shadow-lg); animation: slidePalette 150ms ease; }
+.dialogTitle { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.dialogMsg { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0; }
+.changesOutput { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 10px 12px; font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); white-space: pre-wrap; max-height: 150px; overflow-y: auto; margin: 0; }
+.dialogActions { display: flex; justify-content: flex-end; gap: 8px; }
+.btnCancel { padding: 7px 14px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-secondary); font-size: 13px; cursor: pointer; }
+.btnCancel:hover { background: var(--bg-hover); }
+.btnConfirm { padding: 7px 14px; background: var(--accent-blue); color: white; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; }
+.btnConfirm:hover { background: var(--accent-blue-hover); }

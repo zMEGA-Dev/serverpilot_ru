@@ -1,29 +1,24 @@
 # ServerPilot RU
 
-> 🚧 **Alpha Release** — ServerPilot RU is currently in active testing. Please read the [Alpha Disclaimer](#alpha-disclaimer) before using it on important servers.
+> **🧪 Beta Release** — See the [Beta Disclaimer](#beta-disclaimer) before use.
 
 **English** | [Русский](README_RU.md)
 
-A local-first Windows desktop application for managing Linux and VPS servers over SSH. ServerPilot RU brings terminal access, SFTP, monitoring, logs, deployment tools, Docker, PM2, Nginx, SSL, security checks, scripts, notifications, and optional AI assistance into one desktop interface.
-
-> **Created with the moral and financial support of [SerpMax](https://serpmax.ru) and [Vibes](https://vibes.su).**
+A local desktop application for managing Linux and VPS servers from Windows. ServerPilot RU connects over SSH and gives you a unified interface for everything you'd normally do through a terminal, a file manager, and a web panel — without sending your credentials anywhere.
 
 ---
 
-## What is ServerPilot RU?
+## What is ServerPilot RU
 
-ServerPilot RU is a Windows desktop application built with [Tauri 2](https://tauri.app), Rust, React, TypeScript, and WebView2.
+ServerPilot RU is a [Tauri](https://tauri.app)-based desktop app (Rust backend + React frontend) that runs entirely on your machine. It stores all server credentials locally, encrypted with AES-256-GCM. There is no cloud account, no telemetry, and no required external service.
 
-The application is designed around a local-first model:
+The primary audience is developers and sysadmins who manage one or more Linux/VPS servers and want a proper desktop tool rather than browser-based panels or juggling multiple SSH sessions.
 
-- server connections are made directly from your computer over SSH;
-- server credentials are stored locally;
-- SSH passwords and key passphrases are encrypted locally with AES-256-GCM;
-- there is no required ServerPilot cloud account;
-- there is no mandatory telemetry or analytics service;
-- AI is optional and uses an endpoint configured by the user.
+---
 
-ServerPilot RU is aimed at developers and system administrators who manage Linux/VPS servers and want a dedicated desktop workflow instead of switching between terminal sessions, file managers, and web panels.
+## Screenshots
+
+> Screenshots will be added before the stable release. The interface uses a dark theme by default.
 
 ---
 
@@ -31,234 +26,163 @@ ServerPilot RU is aimed at developers and system administrators who manage Linux
 
 ### SSH / PTY / SFTP
 
-- SSH authentication with password, private-key file, or SSH agent
-- Host-key fingerprint handling and keepalive
-- Full PTY terminal with multiple tabs
-- Interactive programs such as `bash`, `vim`, `nano`, `htop`, and `top`
-- SFTP file browser with upload, download, rename, delete, and file editing
-- Monaco-based editor for supported text files
-- Local encryption of SSH passwords and key passphrases
+- SSH connections with password, key file, or SSH agent (Pageant, ssh-agent) authentication
+- Full PTY terminal with multi-tab support — runs nano, vim, htop, and other interactive programs
+- SFTP file manager with upload, download, rename, delete, chmod, and inline Monaco editor
+- Credentials encrypted locally with AES-256-GCM; never logged or transmitted
 
 ### Dashboard
 
-- CPU, RAM, disk, network, uptime, load average
-- OS, kernel, hostname, IP address, and user information
-- Historical CPU, memory, and disk charts
+Real-time server metrics: CPU, RAM, disk, network, uptime, load average, kernel version, hostname. Color-coded thresholds (yellow at 75%, red at 90%). History charts for CPU, memory, and disk updated every 10 seconds.
 
 ### Monitoring
 
-- Configurable refresh interval
-- CPU, RAM, disk, and load charts
-- Local history of collected monitoring points
+Dedicated monitoring page with configurable refresh interval (3 / 5 / 10 / 30 seconds). Area charts for CPU + RAM combined, separate disk chart, load average chart. Stores up to 720 data points (roughly one hour at 5-second intervals).
 
 ### Logs
 
-- Common Linux log sources including syslog, auth, kernel, Nginx, Apache, MySQL, dmesg, dpkg, and journald
-- Search and match highlighting
-- Severity classification
-- Live tail mode
-- Log download
+Log viewer for common sources: syslog, auth.log, kern.log, nginx access/error, Apache2, MySQL, dmesg, dpkg.log, journald. Live tail mode with 3-second polling. Search with match highlighting. Log line classification by severity (error, warning, info). Download button.
 
 ### Processes
 
-- Remote process list
-- PID, user, CPU, memory, state, and command
-- Sorting and search
-- Process details
-- SIGTERM / SIGKILL actions with confirmation and protected system PIDs
+Full process list via remote `ps`. Sortable table by PID, user, CPU%, RAM%, state, command. Detail panel. Send SIGTERM or SIGKILL with confirmation. Protected PIDs (0, 1, sshd, init, systemd) — killing sshd requires an extra warning.
 
 ### PM2
 
-- PM2 detection and installation
-- Process status, CPU, memory, restarts, and uptime
-- Start, stop, restart, reload, and delete
-- Log viewing
-- Application launch form
-- Environment-variable secret masking
+Detects PM2 automatically. One-click install if not present. List with status, CPU, memory, restart count, uptime. App actions: start, stop, restart, reload, delete. Log viewer with search. Create new apps with name, script, working directory, interpreter, and arguments. Environment variable display with secrets masked.
 
 ### Docker
 
-- Containers, images, volumes, and networks
-- Start, stop, restart, pause, unpause, and remove
-- Container logs and live tail
-- Image pull and removal
-- Network and container details
-- Environment-variable secret masking
+Four tabs: Containers, Images, Volumes, Networks. Container actions: start, stop, restart, pause, unpause, remove. Live log viewer with search and tail mode. Pull and delete images. Delete volumes (with data-loss confirmation). Network inspection. Environment variables displayed with secrets masked. Auto-refresh.
 
 ### Git Deploy
 
-- Git detection
-- Clone and pull workflows
-- Branch and directory handling
-- Repository status and current commit information
-- Uncommitted-change warnings
-- Local deployment history
+Detects existing Git repositories. Shows repo status including uncommitted changes. `git clone` and `git pull` with confirmation before pulling over uncommitted changes. Deployment history (last 50 records in localStorage). Desktop notifications on success and failure. "Open in Files" shortcut.
 
 ### Nginx
 
-- Nginx detection and status
-- Configuration test with `nginx -t`
-- Site discovery
-- Enable / disable / delete configuration entries
-- Monaco configuration editor
-- Configuration backups before changes
-- Validation before reload
+Detects Nginx installation. Lists all sites from `sites-available` and `conf.d`. Per-site actions: enable, disable, delete config entry (without touching the file), reload Nginx, test config. Inline Monaco editor with backup/restore support.
 
 ### SSL / Let's Encrypt
 
-- Certbot detection
-- Certificate status, issuer, expiry, and remaining days
-- Certificate issuance workflow
-- Nginx validation before reload
-- Renewal status and dry-run support
-- Private-key output filtering
+Integrated SSL management inside the Nginx section. Detects Certbot. Shows certificate status, issuer, expiry date, and days remaining. Obtain new certificates with domain and email input. Dry-run test before issuing. Auto-renewal status. Desktop notifications for expiring and expired certificates.
 
 ### Security Audit
 
-A read-only server audit that checks areas such as:
+Runs a server-side security audit via the Rust backend. Results grouped by category with a score gauge (0–100). Filter by status: all / critical / warning / passed / unknown. Animated scan progress. Quick-fix actions where applicable.
 
-- SSH configuration
-- firewall status
-- listening ports
-- recent failed logins
-- available security tooling
+### Scripts
 
-The audit reports **pass / warning / critical / unknown** results and does not change server configuration.
-
-### Saved Scripts
-
-- SQLite-backed script manager
-- Variables such as `{{name}}`
-- Automatic risk classification
-- Confirmation for risky commands
-- Execution history
-- Command retrieval from the local database
-- Rust-side validation and output limits
+Script manager backed by SQLite. CRUD with name, description, command, and `{{variable}}` placeholder support (prompted on run). Risk auto-classification using the same logic as the AI assistant. Per-script run history. Variables are passed to the Rust side and resolved there — the frontend never constructs shell commands by concatenation.
 
 ### Backups
 
-- Creates remote `tar.gz` archives
-- Checks source and available disk space
-- Downloads the archive through SFTP
-- Keeps local backup history
-
-> **Alpha note:** Backup Manager is still part of the Alpha test scope and should not be treated as a replacement for an independent production backup strategy.
+Creates tar.gz archives on the server via SSH, then downloads via SFTP. Checks free disk space before creating. Download dialog via Tauri fs plugin. Desktop notification on failure. Filter by server and status. History stored in SQLite.
 
 ### Notifications
 
-Windows desktop notifications for supported events such as:
-
-- server offline
-- high CPU / RAM / disk usage
-- SSL expiration conditions
-- deployment success or failure
-- backup failures
-
-Notification thresholds and anti-spam behavior are configurable.
-
-> In the current Alpha, notification monitoring depends on the running application; there is no separate background daemon.
+Desktop notifications (Windows native) for: server offline, high CPU/RAM/disk, SSL expiring/expired, backup failure, deployment failure/success. Configurable thresholds per metric. Anti-spam: CPU/RAM/Disk notify only on the first threshold breach and again only after the value drops back below the threshold.
 
 ### AI Assistant (BYO API)
 
-Optional AI assistance using OpenAI-compatible endpoints, including services such as OpenAI, Ollama, LM Studio, vLLM, or a user-owned server.
-
-The assistant can:
-
-- collect selected server context;
-- propose diagnostic commands step by step;
-- classify command risk;
-- wait for explicit user approval before execution.
-
-Server data is isolated from the AI system prompt to reduce prompt-injection risk.
-
-AI is optional and is not required for the core server-management features.
+Connects to any OpenAI-compatible API endpoint: OpenAI, Ollama, LM Studio, vLLM, or your own server. Step-by-step diagnostic mode — AI proposes one command at a time, you review the risk level and choose to execute or skip. Security: server data (metrics, logs, command output) is always injected as a separate user message marked `[SERVER DATA]`, never in the system prompt — this prevents prompt injection through log content. The API URL is validated (http/https only); API keys are kept in `sessionStorage` (planned: move to encrypted Tauri plugin-store).
 
 ---
 
 ## Security Principles
 
-- **Local-first:** the core application does not require a ServerPilot cloud service.
-- **Encrypted credentials:** SSH passwords and key passphrases are encrypted locally with AES-256-GCM.
-- **Explicit command execution:** risky operations require user confirmation.
-- **Read-only security audit:** the audit does not modify server configuration.
-- **Secret filtering:** sensitive values are filtered from relevant logs and command output.
-- **AI isolation:** server-provided data is kept separate from the AI system prompt.
-- **No hardcoded API keys:** AI credentials are supplied by the user.
-
-> Security claims in this document describe the current Alpha implementation. They are not a guarantee that the application is impossible to compromise.
+- **Credentials encrypted at rest** — AES-256-GCM with a per-installation key derived via SHA-256
+- **No shell injection** — all commands are validated on the Rust side; the frontend cannot construct arbitrary shell strings
+- **No logging of secrets** — passwords, keys, and tokens are never written to the log file
+- **Prompt injection protection** — server data is isolated from the AI system prompt
+- **No mandatory cloud** — the app functions entirely offline; no account or license server required
+- **Local-only storage** — `%LOCALAPPDATA%\ServerPilotRU\data.db` + `logs\app.log`; nothing leaves your machine unless you explicitly trigger an AI call
 
 ---
 
-## Privacy / Network Behavior
+## Privacy / Local-first
 
-ServerPilot RU does not require an account and does not use mandatory analytics.
+ServerPilot RU does not collect usage data, does not send analytics, and does not require an account. The only outbound network connections are:
 
-During normal use, the application may connect to:
-
-1. Linux/VPS servers explicitly configured by the user, primarily over SSH/SFTP.
-2. An AI endpoint explicitly configured by the user, when the user invokes AI functionality.
-3. External links that the user chooses to open from the application.
-
-SSH authentication credentials are used to authenticate to the user's selected server. They are not sent to a ServerPilot cloud service.
+1. SSH connections to your own servers
+2. AI API calls — only when you explicitly trigger them, to the endpoint you configure
 
 ---
 
 ## Requirements
 
 - Windows 10 or Windows 11 (x64)
-- WebView2
-- A Linux/VPS server reachable over SSH
+- WebView2 runtime (included in Windows 11; available as a free download for Windows 10)
+- Your servers must be reachable over SSH
 
 ---
 
 ## Installation
 
-Download the latest Alpha installer from [GitHub Releases](https://github.com/zMEGA-Dev/serverpilot_ru/releases) and run it.
+### Pre-built installer (recommended)
 
-For Windows 10, install Microsoft [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/) if it is not already available.
+Download the latest `.exe` installer from the [Releases](../../releases) page and run it.
+
+> WebView2 is required. It is included in Windows 11. On Windows 10, download the [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/) from Microsoft if prompted.
+
+No additional dependencies needed.
 
 ---
 
 ## Testing
 
-ServerPilot RU is currently an Alpha release and needs real-world testing with Linux/VPS servers.
+Download the installer from [Releases](../../releases), install it, and use the app with your own servers.
 
-Please report bugs and suggestions through [GitHub Issues](https://github.com/zMEGA-Dev/serverpilot_ru/issues).
+If you find a bug or want to suggest a feature — open an [Issue](../../issues).
 
-The project includes a detailed manual checklist in `RELEASE_TEST_PLAN.md` for local testing.
-
----
-
-## Alpha Disclaimer
-
-> **ServerPilot RU is currently an Alpha release.** The application is provided for testing and evaluation. Features may change, data formats may change between Alpha releases, and unexpected bugs may occur.
->
-> Do not rely on the Alpha version as your only means of access or backup for critical production infrastructure. Keep independent backups and an alternative SSH access method.
+See [RELEASE_TEST_PLAN.md](RELEASE_TEST_PLAN.md) for a detailed test checklist.
 
 ---
 
 ## Known Limitations
 
-- Windows desktop release only
-- Dark theme is currently the primary theme
-- Text files larger than the editor limit must be downloaded and edited separately
-- Each PTY tab uses a separate SSH session
-- Some Nginx and SSL workflows assume common Debian/Ubuntu layouts
-- Notification checks require the application to be running
-- Some long-running remote SSH operations still need additional runtime testing
+- **Windows only** for now — macOS and Linux builds are possible with Tauri but not yet configured
+- **Large files** (> 2 MB) cannot be opened in the inline editor — download and edit locally
+- **PTY terminal** opens a separate SSH connection per tab
+- Some **Nginx/SSL features** assume a Debian/Ubuntu server layout
+- **KDF** uses SHA-256(MachineGUID + AppID); hardening to PBKDF2/Argon2id is planned for the stable release
+- **SSH host-key pinning** is not yet implemented (fingerprint is shown but not stored/verified)
 
 ---
 
-## Feedback
+## Contributing
 
-Use [GitHub Issues](https://github.com/zMEGA-Dev/serverpilot_ru/issues) for:
+The source code is open. Pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions, project layout, and the PR checklist. Fork the repo, branch from `main`, and keep one feature/fix per PR.
 
-- bug reports
-- reproducible problems
-- feature suggestions
-- Alpha feedback
+Use [Issues](../../issues) for bug reports and feature requests, and [Discussions](../../discussions) for questions and ideas.
 
-When reporting a bug, avoid publishing passwords, SSH private keys, API keys, tokens, or other sensitive server data.
+---
+
+## Beta Disclaimer
+
+> **ServerPilot RU is currently a Beta release.** It is intended for testing and evaluation. The app is stable for everyday use, but unexpected issues may still occur. Always keep independent backups of anything important.
+>
+> The SQLite database, credential storage format, and configuration structures may change between Beta versions without a migration path — export your server list from Settings → General before upgrading.
+
+---
+
+## Support / Feedback
+
+- Open an [Issue](../../issues) on GitHub for bug reports and feature requests
+- The project is in active development — feedback at this stage is especially valuable
+
+---
+
+## Support the Project
+
+ServerPilot RU is free during Beta. If it saves you time and you want to support continued development:
+
+| Method | Details |
+|---|---|
+| 🌍 **CloudTips** (card, international) | [pay.cloudtips.ru/p/62be13c3](https://pay.cloudtips.ru/p/62be13c3) |
+| 🌐 **Capitalist** (international e-wallet) | Send to account `U22338724` at [capitalist.net](https://capitalist.net) |
+
+Any amount is appreciated. There is no obligation — the app will always be free during Beta.
 
 ---
 
@@ -266,18 +190,12 @@ When reporting a bug, avoid publishing passwords, SSH private keys, API keys, to
 
 ### Created with the moral and financial support of
 
-| Project | |
-|---|---|
-| **SerpMax** | [serpmax.ru](https://serpmax.ru) — SEO and website auditing platform |
-| **Vibes** | [vibes.su](https://vibes.su) — links, bio pages, QR codes, and digital marketing tools |
-| **zmega @ Vibes** | [vibes.su/zmega](https://vibes.su/zmega) — author's bio page |
+| | Project | Description |
+|---|---|---|
+| **S** | [SerpMax](https://serpmax.ru) | SEO and website auditing platform — technical analysis, monitoring, and search optimization |
+| **V** | [Vibes](https://vibes.su) | Links, bio pages, QR codes, and digital marketing tools |
+| **Z** | [zmega @ Vibes](https://vibes.su/zmega) | Author's bio page — links, projects, and contacts |
 
 ---
 
-## License
-
-No open-source license is currently declared for this Alpha release. Copyright and redistribution permissions should not be assumed beyond the rights granted by applicable law.
-
----
-
-*ServerPilot RU · Alpha · Local-first SSH desktop tool for Windows*
+*ServerPilot RU · Beta · Local-first SSH desktop tool for Windows*
