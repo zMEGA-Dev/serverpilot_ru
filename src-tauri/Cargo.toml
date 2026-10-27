@@ -3,6 +3,7 @@ name = "server-pilot-ru"
 version = "1.0.0-beta.1"
 description = "ServerPilot RU — Управление Linux-серверами"
 authors = ["ServerPilot RU"]
+license = "MIT"
 edition = "2021"
 
 [lib]

@@ -2,6 +2,7 @@
   "name": "server-pilot-ru",
   "private": true,
   "version": "1.0.0-beta.1",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",

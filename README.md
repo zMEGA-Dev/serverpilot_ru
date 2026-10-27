@@ -175,14 +175,14 @@ Use [Issues](../../issues) for bug reports and feature requests, and [Discussion
 
 ## Support the Project
 
-ServerPilot RU is free during Beta. If it saves you time and you want to support continued development:
+ServerPilot RU is free and open source under the [MIT License](LICENSE). If it saves you time and you want to support continued development:
 
 | Method | Details |
 |---|---|
 | 🌍 **CloudTips** (card, international) | [pay.cloudtips.ru/p/62be13c3](https://pay.cloudtips.ru/p/62be13c3) |
 | 🌐 **Capitalist** (international e-wallet) | Send to account `U22338724` at [capitalist.net](https://capitalist.net) |
 
-Any amount is appreciated. There is no obligation — the app will always be free during Beta.
+Any amount is appreciated. There is no obligation — the app is and will remain free and open source.
 
 ---
 

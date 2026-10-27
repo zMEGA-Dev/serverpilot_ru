@@ -70,14 +70,7 @@ src-tauri/WixTools/
 *.bak
 *.orig
 
-# ─── Future: license / payment backend (PRIVATE — not for this repo) ──
-# license-server/
-# signing-keys/
-# private-key.pem
-# payment/
-# stripe-keys/
-
-# ─── What IS committed (Alpha open source) ────────────
+# ─── What IS committed (open source, MIT-licensed) ───
 # src/                       — full frontend
 # src-tauri/src/             — full Rust backend
 # src-tauri/capabilities/    — Tauri permissions
@@ -88,8 +81,7 @@ src-tauri/WixTools/
 # package-lock.json
 # README.md
 # README_RU.md
-# LICENSE_ARCHITECTURE.md
-# RELEASE_TEST_PLAN.md
+# LICENSE
 # SECURITY.md
 # ARCHITECTURE.md
 # DEVELOPMENT.md
