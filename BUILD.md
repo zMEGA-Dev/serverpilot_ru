@@ -14,24 +14,21 @@ npm run tauri:dev
 npm run tauri:build
 ```
 
-Результат в `src-tauri/target/release/bundle/`:
+Результат в `src-tauri/target/release/bundle/nsis/`:
 
 ```
 bundle/
-├── nsis/
-│   └── ServerPilot-RU_1.0.0_x64-setup.exe   ← Installer
-├── msi/
-│   └── ServerPilot-RU_1.0.0_x64_en-US.msi   ← MSI пакет
-└── ...
+└── nsis/
+    └── ServerPilot RU_<version>_x64-setup.exe   ← NSIS Installer
 ```
+
+> Tauri 2 скачивает NSIS автоматически при первой сборке — устанавливать вручную не нужно.
 
 ## Требования для сборки на Windows
 
-1. **Rust** + MSVC toolchain (`rustup target add x86_64-pc-windows-msvc`)
+1. **Rust** (stable, x86_64-pc-windows-msvc) — установить через `rustup`: https://rustup.rs/
 2. **Visual Studio Build Tools 2022** с компонентом "Desktop development with C++"
-3. **NSIS** для создания installer:
-   - Скачать: https://nsis.sourceforge.io/Download
-   - Добавить в PATH
+3. **Node.js** 20 LTS+
 
 ## Portable версия
 

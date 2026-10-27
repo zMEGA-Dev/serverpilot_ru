@@ -108,8 +108,8 @@ function MyComponent() {
 
 ### Логи приложения
 
-Rust логи выводятся в консоль в dev-режиме.
-В production: `%LOCALAPPDATA%\ServerPilotRU\logs\`.
+Rust логи пишутся в `%LOCALAPPDATA%\ServerPilotRU\logs\app.log` (ротация при превышении 5 МБ → `app.old.log`).
+В dev-режиме дополнительно выводятся в консоль.
 
 ### SQLite база данных
 
